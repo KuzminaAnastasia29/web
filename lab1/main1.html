@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Калькулятор мазуту</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input { margin: 5px; padding: 5px; width: 120px; }
+    button { padding: 7px 15px; margin-top: 10px; cursor: pointer; }
+    .results { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Калькулятор характеристик мазуту</h2>
+  <div>
+    Вуглець (%) <input id="c" type="number">  
+    Водень (%) <input id="h" type="number">  
+    Кисень (%) <input id="o" type="number">  
+    Сірка (%) <input id="s" type="number">  
+    Qidaf (МДж/кг) <input id="qdaf" type="number">  
+    Вологість (%) <input id="wr" type="number">  
+    Зольність (%) <input id="ad" type="number">  
+    Ванадій (мг/кг) <input id="v" type="number">  
+  </div>
+  <button onclick="calculateMazutData()">Обчислити</button>
+
+  <div class="results" id="results"></div>
+
+  <script>
+    function calculateMazutData() {
+      const C = parseFloat(document.getElementById('c').value) || 0;
+      const H = parseFloat(document.getElementById('h').value) || 0;
+      const O = parseFloat(document.getElementById('o').value) || 0;
+      const S = parseFloat(document.getElementById('s').value) || 0;
+      const Qidaf = parseFloat(document.getElementById('qdaf').value) || 0;
+      const Wr = parseFloat(document.getElementById('wr').value) || 0;
+      const Ad = parseFloat(document.getElementById('ad').value) || 0;
+      const V = parseFloat(document.getElementById('v').value) || 0;
+
+      const factor = (100 - Wr - Ad) / 100;
+      const Cr = C * factor;
+      const Hr = H * factor;
+      const Or = O * factor;
+      const Sr = S * factor;
+      const Vr = V * (100 - Wr) / 100;
+
+      const Qr = Qidaf * factor;
+
+      document.getElementById('results').innerHTML = `
+        <p>Склад робочої маси:</p>
+        <p>Вуглець (C): ${Cr.toFixed(2)}%</p>
+        <p>Водень (H): ${Hr.toFixed(2)}%</p>
+        <p>Кисень (O): ${Or.toFixed(2)}%</p>
+        <p>Сірка (S): ${Sr.toFixed(2)}%</p>
+        <p>Ванадій (V): ${Vr.toFixed(2)} мг/кг</p>
+        <p>Нижча теплота згоряння (робоча): ${Qr.toFixed(2)} МДж/кг</p>
+      `;
+    }
+  </script>
+</body>
+</html>

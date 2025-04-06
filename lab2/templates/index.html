@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор Викидів</title>
+</head>
+<body>
+    <h2>Розрахунок валових викидів твердих частинок</h2>
+    <form method="POST">
+        <label>Маса спаленого вугілля (т): <input type="number" step="any" name="B_coal" required></label><br>
+        <label>Маса спаленого мазуту (т): <input type="number" step="any" name="B_oil" required></label><br>
+        <label>Об’єм природного газу (тис. м³): <input type="number" step="any" name="V_gas" required></label><br>
+        <button type="submit">Розрахувати</button>
+    </form>
+
+    {% if result %}
+        <h3>Результати:</h3>
+        <ul>
+            <li>Показник емісії (вугілля): {{ result.k_coal }} г/ГДж</li>
+            <li>Валовий викид (вугілля): {{ result.E_coal }} т</li>
+            <li>Показник емісії (мазут): {{ result.k_oil }} г/ГДж</li>
+            <li>Валовий викид (мазут): {{ result.E_oil }} т</li>
+            <li>Показник емісії (газ): {{ result.k_gas }} г/ГДж</li>
+            <li>Валовий викид (газ): {{ result.E_gas }} т</li>
+            <li><strong>Загальний викид:</strong> {{ result.E_total }} т</li>
+        </ul>
+    {% endif %}
+</body>
+</html>

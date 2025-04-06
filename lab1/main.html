@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Калькулятор характеристик палива</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input { margin: 5px; padding: 5px; width: 100px; }
+    button { padding: 7px 15px; margin-top: 10px; cursor: pointer; }
+    .results { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Калькулятор характеристик палива</h2>
+  <div>
+    HP (%): <input id="hp" type="number">  
+    CP (%): <input id="cp" type="number">  
+    SP (%): <input id="sp" type="number">  
+    NP (%): <input id="np" type="number">  
+    OP (%): <input id="op" type="number">  
+    WP (%): <input id="wp" type="number">  
+    AP (%): <input id="ap" type="number">  
+  </div>
+  <button onclick="calculateFuelData()">Обчислити</button>
+
+  <div class="results" id="results"></div>
+
+  <script>
+    function calculateFuelData() {
+      const HP = parseFloat(document.getElementById('hp').value) || 0;
+      const CP = parseFloat(document.getElementById('cp').value) || 0;
+      const SP = parseFloat(document.getElementById('sp').value) || 0;
+      const OP = parseFloat(document.getElementById('op').value) || 0;
+      const WP = parseFloat(document.getElementById('wp').value) || 0;
+      const AP = parseFloat(document.getElementById('ap').value) || 0;
+
+      const Wr = WP;
+      const Ar = AP;
+      const Ad = (Ar * 100) / (100 - Wr);
+
+      const dryMass = 100 / (100 - Wr);
+      const combustibleMass = 100 / (100 - Wr - Ar);
+      const dryCombustibleMass = 100 / (100 - Ad);
+
+      const Qr = 339 * CP + 1030 * HP - 108.8 * (OP - SP) - 25 * WP;
+      const Qd = Qr / dryMass;
+      const Qdaf = Qd / (1 - Ad / 100);
+
+      document.getElementById('results').innerHTML = `
+        <p>Суха маса: ${dryMass.toFixed(3)}</p>
+        <p>Горюча маса: ${combustibleMass.toFixed(3)}</p>
+        <p>Суха горюча маса: ${dryCombustibleMass.toFixed(3)}</p>
+        <p>Нижча теплота згоряння (робоча): ${Qr.toFixed(3)} кДж/кг</p>
+        <p>Нижча теплота згоряння (суха): ${Qd.toFixed(3)} кДж/кг</p>
+        <p>Нижча теплота згоряння (горюча): ${Qdaf.toFixed(3)} кДж/кг</p>
+      `;
+    }
+  </script>
+</body>
+</html>
