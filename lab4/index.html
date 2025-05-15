@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Веб-калькулятор КЗ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Веб-калькулятор струмів КЗ</h1>
+
+  <label>Потужність S (кВА або МВА):
+    <input type="number" id="power" value="500">
+  </label>
+
+  <label>Напруга U (кВ):
+    <input type="number" id="voltage" value="10">
+  </label>
+
+  <label>cosφ (для навантаження):
+    <input type="number" id="cosphi" step="0.01" value="0.9">
+  </label>
+
+  <label>Тип розрахунку:
+    <select id="calcType">
+      <option value="threePhase">Трифазне КЗ</option>
+      <option value="singlePhase">Однофазне КЗ</option>
+      <option value="thermalCheck">Перевірка термічної стійкості</option>
+    </select>
+  </label>
+
+  <label id="limitLabel" style="display:none;">Граничний струм (кА):
+    <input type="number" id="limitCurrent" step="0.1">
+  </label>
+
+  <button onclick="calculate()">Розрахувати</button>
+
+  <div class="result" id="result"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
